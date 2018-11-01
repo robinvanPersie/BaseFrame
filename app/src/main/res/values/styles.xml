@@ -1,0 +1,67 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@android:color/holo_red_light</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowEnterTransition">@android:transition/fade</item>
+        <item name="android:windowExitTransition">@android:transition/fade</item>
+
+    </style>
+
+    <style name="pb">
+        <item name="colorAccent">#ffff00</item>
+        <item name="android:thickness">10dp</item>
+    </style>
+
+    <style name="NoActionBar" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">#eeeeee</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <!--<item name="collapseIcon">?attr/homeAsUpIndicator</item>-->
+        <!--<item name="android:background">@color/brightWhite</item>-->
+    </style>
+
+    <!--底部导航栏样式-->
+    <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="elevation">5dp</item>
+    </style>
+
+    <!-- base -->
+    <style name="Progress" parent="Base.Widget.AppCompat.ProgressBar">
+    </style>
+
+    <style name="Progress.loading">
+        <item name="android:maxHeight">24dip</item>
+        <item name="android:minWidth">24dip</item>
+        <item name="android:maxWidth">24dip</item>
+        <item name="android:minHeight">24dip</item>
+    </style>
+
+    <style name="TextNormalWhite">
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.Loading">
+        <item name="colorAccent">?attr/color</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">80%</item>
+        <item name="android:windowMinWidthMinor">80%</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+</resources>

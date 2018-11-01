@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/f_item"
+            android:title="第一个" />
+
+        <item
+            android:id="@+id/s_item"
+            android:title="第er个" />
+
+        <item
+            android:id="@+id/t_item"
+            android:title="第san个" />
+
+        <item
+            android:id="@+id/fo_item"
+            android:title="第四个" />
+    </group>
+
+    <item android:title="Communicate">
+
+        <menu>
+            <item
+                android:id="@+id/aaa"
+                android:title="aaa"/>
+
+            <item
+                android:id="@+id/bbb"
+                android:title="bbb"/>
+        </menu>
+
+    </item>
+
+</menu>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/text_size_16_sp"
+            android:textColor="@color/app_text_color"
+            tools:text="新版本 v1.7.7"/>
+
+        <TextView
+
+            android:id="@+id/content_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_tv"
+            android:layout_marginTop="@dimen/dp_20"
+            android:textColor="@color/app_text_color"
+            tools:text="1.sssssssss\n2.3333333333\n3.sslslliiiiie"/>
+
+
+        <android.support.v4.widget.Space
+            android:id="@+id/middle_line"
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="@dimen/dp_1"
+            android:layout_below="@id/content_tv"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/cancel_btn"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_below="@id/content_tv"
+            android:layout_toLeftOf="@id/middle_line"
+            android:gravity="center"
+            android:text="取消"/>
+
+        <TextView
+            android:id="@+id/confirm_btn"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_below="@id/content_tv"
+            android:layout_toRightOf="@id/middle_line"
+            android:gravity="center"
+            android:text="立即更新"/>
+
+    </RelativeLayout>
+</layout>
