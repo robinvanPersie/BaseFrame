@@ -77,8 +77,12 @@ public class StorageUtils {
      * @return
      */
     public static boolean createFile(String path) {
+        File file = new File(path);
+        return createFile(file);
+    }
+
+    public static boolean createFile(File file) {
         try {
-            File file = new File(path);
             if (file.exists()) {
                 file.delete();
             }
@@ -96,6 +100,10 @@ public class StorageUtils {
      */
     public static boolean mkDir(String path) {
         File file = new File(path);
+        return mkDir(file);
+    }
+
+    public static boolean mkDir(File file) {
         if (file.exists() && file.isDirectory()) {
             return true;
         }
@@ -109,6 +117,10 @@ public class StorageUtils {
      */
     public static boolean deleteFile(String path) {
         File file = new File(path);
+        return deleteFile(file);
+    }
+
+    public static boolean deleteFile(File file) {
         if (file.exists() && file.isFile()) {
             return file.delete();
         }
@@ -121,6 +133,11 @@ public class StorageUtils {
      */
     public static void deleteDirectory(String path) {
         File dir = new File(path);
+        deleteDirectory(dir);
+    }
+
+    public static void deleteDirectory(File dir) {
+
         if (!dir.exists() || !dir.isDirectory()) return;
         File[] files = dir.listFiles();
         if (files.length == 0) {
@@ -159,7 +176,10 @@ public class StorageUtils {
      * 下载前检测path
      */
     public static void checkFile(String path) {
-        deleteFile(path);
+        File file = new File(path);
+        deleteFile(file);
+        mkDir(file.getParentFile());
+        createFile(file);
     }
 
     public static boolean renameTo(String src, String target) {

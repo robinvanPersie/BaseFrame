@@ -58,7 +58,7 @@ public class ResponseBodyWrapper extends ResponseBody {
 
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;
                 if (listener != null) {
-                    listener.onProgress(totalBytesRead, contentLength());
+                    listener.onProgress(null, totalBytesRead, contentLength());
                 }
                 return bytesRead;
             }

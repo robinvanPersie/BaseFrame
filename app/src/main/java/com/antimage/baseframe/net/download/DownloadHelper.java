@@ -11,15 +11,22 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -38,7 +45,9 @@ public class DownloadHelper {
     private static volatile DownloadHelper helper;
     private DownloadService downloadService;
     private Queue<IDownloadCallback> progressQueue = new LinkedList<>();
-    private List<DownloadModel> downloadQueue;
+    private Map<String, DownloadModel> downloadMap;
+
+    private Disposable disposable;
 
     private String apkName = APK_NAME;
 
@@ -56,7 +65,7 @@ public class DownloadHelper {
     }
 
     private DownloadHelper() {
-        downloadQueue = Collections.synchronizedList(new LinkedList<>());
+        downloadMap = Collections.synchronizedMap(new LinkedHashMap<>());
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
@@ -87,7 +96,12 @@ public class DownloadHelper {
     }
 
     public void push(DownloadModel model) {
-        downloadQueue.add(model);
+        disposable = null;
+        if (downloadMap.containsKey(model.getUrl())) {
+            downloadMap.remove(model.getUrl());
+        }
+        downloadMap.put(model.getUrl(), model);
+        downloadFile(model);
     }
 
     /**
@@ -98,10 +112,9 @@ public class DownloadHelper {
     }
 
     /**
-     *
-     * @param url        下载地址
-     * @param target     目标地址
-     * @param callback   下载监听
+     * @param url      下载地址
+     * @param target   目标地址
+     * @param callback 下载监听
      */
     public void downloadApk(String url, String target, IDownloadCallback callback) {
         if (TextUtils.isEmpty(target)) {
@@ -117,17 +130,21 @@ public class DownloadHelper {
         this.downloadFile(model.getUrl(), model.getTarget(), 0, 0, model.getDownloadProgress());
     }
 
-    /**
-     *
-     * @param url       下载地址
-     * @param target    目标地址
-     * @param callback  下载监听
-     */
     public void downloadFile(String url, String target, IDownloadCallback callback) {
         this.downloadFile(url, target, 0, 0, callback);
     }
 
     public void downloadFile(String url, String target, int start, int len, IDownloadCallback callback) {
+        this.downloadFile(null, url, target, start, len, callback);
+    }
+
+    /**
+     * @param resId    获取url的id，通过callback的getUrl获取，如果不需要通过这个id获取url，可以直接将url赋值给它
+     * @param url      下载地址
+     * @param target   目标地址
+     * @param callback 下载监听
+     */
+    public void downloadFile(String resId, String url, String target, int start, int len, IDownloadCallback callback) {
         if (TextUtils.isEmpty(url)) {
             Timber.e("download url is null");
             return;
@@ -135,7 +152,6 @@ public class DownloadHelper {
         if (TextUtils.isEmpty(target)) {
             Timber.e("download target is null");
         }
-        StorageUtils.checkFile(target);
         if (callback == null) {
             progressQueue.offer(new IDownloadCallback.IDefaultDownloadCallback());
         } else {
@@ -143,40 +159,53 @@ public class DownloadHelper {
         }
         String end = len <= 0 ? "" : String.valueOf(start + len);
         String range = "bytes=" + start + "-" + end;
-        downloadService.downloadFile(url, range)
+        disposable = downloadService.downloadFile(url, range)
+                .doOnSubscribe(disposable -> StorageUtils.checkFile(target))
                 .observeOn(Schedulers.computation())
-                .subscribe(responseBody -> {
-                    InputStream ins = null;
-                    RandomAccessFile out = null;
-                    File targetFile = new File(target);
-                    StringBuilder tempSb = new StringBuilder(targetFile.getParent()).append(File.separator).append(System.currentTimeMillis());
-                    try {
-                        ins = responseBody.byteStream();
-                        out = new RandomAccessFile(tempSb.toString(), "rw");
-                        out.seek(start);
-                        byte[] buffer = new byte[1024 * 2];
-                        int length;
-                        while ((length = ins.read(buffer)) != -1) {
-                            out.write(buffer, 0, length);
-                        }
-                        StorageUtils.renameTo(tempSb.toString(), target);
-                        if (callback != null) {
-                            callback.onComplete(target);
-                        }
-                    } catch (IOException e) {
-                        onError(e);
-                    } finally {
-                        try {
-                            if (ins != null) {
-                                ins.close();
-                            }
-                            if (out != null) {
-                                out.close();
-                            }
-                        } catch (IOException e) {
-                            Timber.e("download close stream error");
-                        }
-                    }
-                }, Timber::e);
+                .subscribe(new DownloadThread(new FCallback(), resId, target + ".tmp", target));
+    }
+
+    private class FCallback implements IDownloadCallback {
+        @Override
+        public String getUrl(String resId) {
+            return downloadMap.get(resId).getUrl();
+        }
+
+        @Override
+        public boolean isPause(String resId) {
+            if (disposable == null || disposable.isDisposed()) return true;
+            if (downloadMap.get(resId) == null) return true;
+            return false;
+        }
+
+        @Override
+        public void onStart(String resId, long contentLength, String eTag) {}
+
+        @Override
+        public void onProgress(String resId, long progress, long contentLength) {
+
+        }
+
+        @Override
+        public void onComplete(String resId, String targetPath) {
+            DownloadModel model = downloadMap.remove(resId);
+            if (model == null) return;
+        }
+
+        @Override
+        public void onError(String resId, String path) {
+            DownloadModel model = downloadMap.remove(resId);
+            if (model == null) return;
+        }
+
+        @Override
+        public int getStartOffset() {
+            return 0;
+        }
+
+        @Override
+        public int getLength() {
+            return 0;
+        }
     }
 }

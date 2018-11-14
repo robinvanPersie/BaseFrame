@@ -6,48 +6,61 @@ package com.antimage.baseframe.net.download;
 
 public interface IDownloadCallback {
 
-    String getUrl(String url);
+    String getUrl(String resId);
 
-    void onPause();
+    boolean isPause(String resId);
 
-    void onStart();
+    void onStart(String resId, long contentLength, String eTag);
 
-    int onProgress(long progress, long contentLength);
+    void onProgress(String resId, long progress, long contentLength);
 
-    void onComplete(String target);
+    void onComplete(String resId, String targetPath);
 
-    void onFailure();
+    void onError(String resId, String path);
 
-    public static class IDefaultDownloadCallback implements IDownloadCallback
-    {
+    int getStartOffset();
+
+    int getLength();
+
+    class IDefaultDownloadCallback implements IDownloadCallback {
+
         @Override
-        public String getUrl(String url) {
-            return null;
+        public String getUrl(String resId) {
+            return resId;
         }
 
         @Override
-        public void onPause() {
+        public boolean isPause(String resId) {
+            return false;
+        }
+
+        @Override
+        public void onStart(String resId, long contentLength, String eTag) {
 
         }
 
         @Override
-        public void onStart() {
+        public void onProgress(String resId, long progress, long contentLength) {
+        }
+
+        @Override
+        public void onComplete(String resId, String targetPath) {
 
         }
 
         @Override
-        public int onProgress(long progress, long contentLength) {
+        public void onError(String resId, String path) {
+
+        }
+
+        @Override
+        public int getStartOffset() {
             return 0;
         }
 
         @Override
-        public void onComplete(String target) {
-
-        }
-
-        @Override
-        public void onFailure() {
-
+        public int getLength() {
+            return 0;
         }
     }
 }

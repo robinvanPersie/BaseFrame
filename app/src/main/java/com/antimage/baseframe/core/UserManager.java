@@ -1,5 +1,7 @@
 package com.antimage.baseframe.core;
 
+import com.antimage.baseframe.App;
+import com.antimage.baseframe.model.User;
 import com.antimage.baseframe.utils.android.SPUtils;
 
 import io.reactivex.Observable;
@@ -11,6 +13,15 @@ import io.reactivex.Observable;
 public class UserManager {
 
     public UserManager() {}
+
+    private User mUser;
+
+    public User getUser() {
+        if (mUser == null) {
+            mUser = App.getInstance().getDaoSession().getUserDao().load(0l);
+        }
+        return mUser;
+    }
 
     public boolean isLogin() {
         return SPUtils.isLogin();
