@@ -15,9 +15,20 @@ android {
         renderscriptSupportModeEnabled true
     }
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [DEBUG_MODE: true, PACKAGE_NAME: defaultConfig.applicationId+ '.dev']
+            resValue("string", "app_name", "BaseFrame_test")
+            applicationIdSuffix '.dev'
+            versionNameSuffix '-dev'
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [DEBUG_MODE: false, PACKAGE_NAME: defaultConfig.applicationId]
+            resValue("string", "app_name", "BaseFrame")
+            shrinkResources true
         }
     }
     dataBinding.enabled = true

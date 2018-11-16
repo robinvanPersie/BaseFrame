@@ -6,7 +6,14 @@ package com.antimage.baseframe.exception;
 
 public class ApiException extends RuntimeException {
 
+    private static final int DEFAULT_CODE = -1;
+
     private int code;
+
+    public ApiException(String message) {
+        super(message);
+        this.code = DEFAULT_CODE;
+    }
 
     public ApiException(int code, String message) {
         super(message);

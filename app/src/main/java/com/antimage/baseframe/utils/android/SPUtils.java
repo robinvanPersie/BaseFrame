@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.antimage.baseframe.App;
+import com.antimage.baseframe.core.G;
 
 /**
  * Created by xuyuming on 2018/10/17.
@@ -17,6 +18,7 @@ public class SPUtils {
 
     private static final String KEY_GUIDE = "guide"; // 首次启动引导页
     private static final String KEY_LOGIN = "login"; // 登录状态
+    private static final String KEY_ENVIRONMENT = "environment"; // 环境
 
     public static void putGuide(boolean isGuide) {
         putBoolean(KEY_GUIDE, isGuide);
@@ -26,12 +28,20 @@ public class SPUtils {
         return getBoolean(KEY_GUIDE, false);
     }
 
-    public static void putLoginStatus(boolean isLogin) {
+    public static void setLoginStatus(boolean isLogin) {
         putBoolean(KEY_LOGIN, isLogin);
     }
 
     public static boolean isLogin() {
         return getBoolean(KEY_LOGIN, false);
+    }
+
+    public static void setEnvironment(@G.Environments int environmentType) {
+        putInt(KEY_ENVIRONMENT, environmentType);
+    }
+
+    public static int getEnvironment() {
+        return getInt(KEY_ENVIRONMENT, -1);
     }
 
     private static void putString(String key, String value) {

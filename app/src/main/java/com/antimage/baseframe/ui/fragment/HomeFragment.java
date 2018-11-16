@@ -1,5 +1,6 @@
 package com.antimage.baseframe.ui.fragment;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.antimage.baseframe.R;
 import com.antimage.baseframe.databinding.FragmentHomeBinding;
+import com.antimage.baseframe.ui.activity.SettingActivity;
 
 /**
  * Created by xuyuming on 2018/9/28.
@@ -49,6 +51,15 @@ public class HomeFragment extends Fragment {
             lp.gravity = Gravity.CENTER_VERTICAL;
             mBinding.toolBarId.getChildAt(i).setLayoutParams(lp);
         }
+
+        mBinding.navView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.item_setting:
+                    startActivity(new Intent(getActivity(), SettingActivity.class));
+                    return true;
+            }
+            return true;
+        });
     }
 
     @Override

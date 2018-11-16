@@ -67,4 +67,5 @@ public class AppModule {
         Database db = helper.getWritableDb();
         return new DaoMaster(db).newSession();
     }
+
 }

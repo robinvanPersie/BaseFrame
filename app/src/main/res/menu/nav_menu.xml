@@ -23,8 +23,8 @@
 
         <menu>
             <item
-                android:id="@+id/aaa"
-                android:title="aaa"/>
+                android:id="@+id/item_setting"
+                android:title="设置"/>
 
             <item
                 android:id="@+id/bbb"

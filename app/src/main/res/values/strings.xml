@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BaseFrame</string>
+    <!--<string name="app_name">@{app_name}</string>-->
     <string name="open_toggle">open</string>
     <string name="close_toggle">close</string>
     <string name="title_activity_bottom">BottomActivity</string>

@@ -1,5 +1,6 @@
 package com.antimage.baseframe.di.module;
 
+import com.antimage.baseframe.core.AppConfig;
 import com.antimage.baseframe.net.api.ApiService;
 
 import javax.inject.Singleton;
@@ -21,10 +22,10 @@ public class ApiModule {
 
     @Singleton
     @Provides
-    ApiService provideApiService(Converter.Factory converterFactory, OkHttpClient okHttpClient) {
+    ApiService provideApiService(AppConfig appConfig, Converter.Factory converterFactory, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("")
+                .baseUrl(appConfig.getApiHost())
                 .addConverterFactory(converterFactory)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build()

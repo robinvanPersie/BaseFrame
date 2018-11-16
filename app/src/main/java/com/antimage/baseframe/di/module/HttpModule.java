@@ -3,10 +3,13 @@ package com.antimage.baseframe.di.module;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.antimage.baseframe.core.AppConfig;
 import com.antimage.baseframe.utils.android.NetworkUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -31,9 +34,13 @@ public class HttpModule {
 
     @Singleton
     @Provides
-    OkHttpClient provideOKHttpClient(Context context) {
+    OkHttpClient provideOKHttpClient(Context context, AppConfig appConfig) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+
+        if (!appConfig.isRelease()) {
+            builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+        }
+        builder.addNetworkInterceptor(new CustomInterceptor(context, appConfig));
         builder.readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .connectTimeout(5, TimeUnit.SECONDS)
@@ -44,9 +51,11 @@ public class HttpModule {
     private static class CustomInterceptor implements Interceptor {
 
         private Context context;
+        private AppConfig appConfig;
 
-        public CustomInterceptor(Context context) {
+        public CustomInterceptor(Context context, AppConfig appConfig) {
             this.context = context;
+            this.appConfig = appConfig;
         }
 
         @Override
@@ -54,7 +63,14 @@ public class HttpModule {
             // add request header
             Request originalRequest = chain.request();
             Request.Builder builder = originalRequest.newBuilder();
-            Headers originalHeaders = originalRequest.headers();
+
+            Map<String, String> map = appConfig.getHeaders();
+            for (String key : map.keySet()) {
+                key = key == null ? "" : key;
+                String value = map.get(key);
+                value = value == null ? "" : URLEncoder.encode(value, "UTF-8");
+                builder.header(key, value);
+            }
 
             Request newRequest = builder
                     .method(originalRequest.method(), originalRequest.body())
