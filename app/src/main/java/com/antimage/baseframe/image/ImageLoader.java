@@ -17,6 +17,10 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ImageLoader {
 
+    public static void loadImage(Context context, @DrawableRes int id, ImageView imageView) {
+        GlideApp.with(context).load(id).into(imageView);
+    }
+
     /**
      * 普通加载
      * @param context

@@ -21,6 +21,7 @@ import android.view.animation.PathInterpolator;
 
 import com.antimage.baseframe.R;
 import com.antimage.baseframe.databinding.FragmentViewAnimBinding;
+import com.antimage.baseframe.image.ImageLoader;
 import com.antimage.baseframe.ui.activity.AnimOpenActivity;
 
 /**
@@ -36,6 +37,7 @@ public class ViewAnimFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_view_anim, container, false);
         mBinding.toolBarId.setTitle("va标题");
+        ImageLoader.loadImage(getContext(), R.mipmap.ic_launcher, mBinding.ivView);
         mBinding.btn1.setOnClickListener(v -> {
             int centerX = mBinding.ivView.getWidth() / 2;
             int centerY = mBinding.ivView.getHeight() / 2;

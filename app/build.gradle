@@ -81,7 +81,12 @@ dependencies {
     }
     annotationProcessor'com.github.bumptech.glide:compiler:4.8.0'
     // GlideModule merged automatically
-    implementation 'com.github.bumptech.glide:okhttp3-integration:1.5.0@aar'
+//    implementation 'com.github.bumptech.glide:okhttp3-integration:1.5.0@aar'
+    implementation ('com.github.bumptech.glide:okhttp3-integration:4.8.0') {
+        exclude group: 'com.android.support'
+        exclude module: 'design'
+    }
+
     implementation ('jp.wasabeef:glide-transformations:3.3.0') {
         exclude group: 'com.android.support'
         exclude module: 'renderscript-v8'
