@@ -17,6 +17,7 @@ import com.antimage.baseframe.R;
 import com.antimage.baseframe.databinding.FragmentLrecyclerBinding;
 import com.antimage.baseframe.ui.fragment.sub.GridSubFragment;
 import com.antimage.baseframe.ui.fragment.sub.LinearSubFragment;
+import com.antimage.baseframe.ui.fragment.sub.SnapSubFragment;
 import com.antimage.baseframe.ui.fragment.sub.StaggerSubFragment;
 
 /**
@@ -77,9 +78,9 @@ public class LRecyclerFragment extends Fragment {
         return binding.getRoot();
     }
 
-    String[] titles = {"linear", "grid", "stagger", "hint", "hint", "hint", "hint", "hint", "hint"};
+    String[] titles = {"linear", "grid", "stagger", "snap", "hint", "hint", "hint", "hint", "hint"};
     Fragment[] fragments = {new LinearSubFragment(), new GridSubFragment(),
-            new StaggerSubFragment(), new LinearSubFragment(), new LinearSubFragment(), new LinearSubFragment(),
+            new StaggerSubFragment(), new SnapSubFragment(), new LinearSubFragment(), new LinearSubFragment(),
             new LinearSubFragment(), new LinearSubFragment(), new LinearSubFragment() };
 
     class PagerAdapter extends FragmentPagerAdapter {
