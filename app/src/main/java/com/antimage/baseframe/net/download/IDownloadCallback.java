@@ -1,5 +1,7 @@
 package com.antimage.baseframe.net.download;
 
+import io.reactivex.disposables.Disposable;
+
 /**
  * Created by xuyuming on 2018/10/24.
  */
@@ -21,6 +23,8 @@ public interface IDownloadCallback {
     int getStartOffset();
 
     int getLength();
+
+    void onSubscribe(String resId, Disposable d);
 
     class IDefaultDownloadCallback implements IDownloadCallback {
 
@@ -61,6 +65,11 @@ public interface IDownloadCallback {
         @Override
         public int getLength() {
             return 0;
+        }
+
+        @Override
+        public void onSubscribe(String resId, Disposable d) {
+
         }
     }
 }

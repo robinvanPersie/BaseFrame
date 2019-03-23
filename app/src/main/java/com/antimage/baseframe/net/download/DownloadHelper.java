@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -46,8 +47,6 @@ public class DownloadHelper {
     private DownloadService downloadService;
     private Queue<IDownloadCallback> progressQueue = new LinkedList<>();
     private Map<String, DownloadModel> downloadMap;
-
-    private Disposable disposable;
 
     private String apkName = APK_NAME;
 
@@ -96,7 +95,10 @@ public class DownloadHelper {
     }
 
     public void push(DownloadModel model) {
-        disposable = null;
+        if (model.getDisposable() != null && !model.getDisposable().isDisposed()) {
+            Timber.e("task do not finish!");
+            return;
+        }
         if (downloadMap.containsKey(model.getUrl())) {
             downloadMap.remove(model.getUrl());
         }
@@ -153,16 +155,18 @@ public class DownloadHelper {
             Timber.e("download target is null");
         }
         if (callback == null) {
-            progressQueue.offer(new IDownloadCallback.IDefaultDownloadCallback());
+            callback = new FCallback();
+            downloadMap.get(resId).setDownloadProgress(callback);
+//            progressQueue.offer(new IDownloadCallback.IDefaultDownloadCallback());
         } else {
-            progressQueue.offer(callback);
+//            progressQueue.offer(callback);
         }
         String end = len <= 0 ? "" : String.valueOf(start + len);
         String range = "bytes=" + start + "-" + end;
-        disposable = downloadService.downloadFile(url, range)
+        downloadService.downloadFile(url, range)
                 .doOnSubscribe(disposable -> StorageUtils.checkFile(target))
                 .observeOn(Schedulers.computation())
-                .subscribe(new DownloadThread(new FCallback(), resId, target + ".tmp", target));
+                .subscribe(new DownloadThread(callback, resId, target + ".tmp", target));
     }
 
     private class FCallback implements IDownloadCallback {
@@ -173,29 +177,41 @@ public class DownloadHelper {
 
         @Override
         public boolean isPause(String resId) {
-            if (disposable == null || disposable.isDisposed()) return true;
-            if (downloadMap.get(resId) == null) return true;
+            DownloadModel model = downloadMap.get(resId);
+            if (model == null) return true;
+            if (model.getDisposable() == null || model.getDisposable().isDisposed()) return true;
             return false;
         }
 
         @Override
-        public void onStart(String resId, long contentLength, String eTag) {}
+        public void onStart(String resId, long contentLength, String eTag) {
+        }
 
         @Override
         public void onProgress(String resId, long progress, long contentLength) {
-
+//todo
         }
 
         @Override
         public void onComplete(String resId, String targetPath) {
             DownloadModel model = downloadMap.remove(resId);
             if (model == null) return;
+            Disposable disposable = model.getDisposable();
+            if (disposable != null && !disposable.isDisposed()) {
+                disposable.dispose();
+            }
+            model.setDisposable(null);
         }
 
         @Override
         public void onError(String resId, String path) {
             DownloadModel model = downloadMap.remove(resId);
             if (model == null) return;
+            Disposable disposable = model.getDisposable();
+            if (disposable != null && !disposable.isDisposed()) {
+                disposable.dispose();
+            }
+            model.setDisposable(null);
         }
 
         @Override
@@ -206,6 +222,11 @@ public class DownloadHelper {
         @Override
         public int getLength() {
             return 0;
+        }
+
+        @Override
+        public void onSubscribe(String resId, Disposable d) {
+            downloadMap.get(resId).setDisposable(d);
         }
     }
 }

@@ -9,7 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 
-import io.reactivex.functions.Consumer;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 import timber.log.Timber;
 
@@ -17,7 +18,7 @@ import timber.log.Timber;
  * Created by xuyuming on 2018/11/5.
  */
 
-public class DownloadThread implements Consumer<ResponseBody> {
+public class DownloadThread implements Observer<ResponseBody> {
 
     private boolean isRunning = true;
 
@@ -44,12 +45,11 @@ public class DownloadThread implements Consumer<ResponseBody> {
     }
 
     @Override
-    public void accept(ResponseBody responseBody) {
-        String url = callback.getUrl(resId);
-//        int start = callback.getStartOffset();
-//        int len = callback.getLength();
-//        String end = len <= 0 ? "" : String.valueOf(start + len);
-//        String range = "bytes=" + start + "-" + end;
+    public void onNext(ResponseBody responseBody) {
+        int start = callback.getStartOffset();
+        int len = callback.getLength();
+        String end = len <= 0 ? "" : String.valueOf(start + len);
+        String range = "bytes=" + start + "-" + end;
         if (callback.isPause(resId)) {
             return;
         }
@@ -59,9 +59,10 @@ public class DownloadThread implements Consumer<ResponseBody> {
         try {
             ins = responseBody.byteStream();
             out = new RandomAccessFile(tempFile, "rw");
-//            out.seek(start);
+            out.seek(start);
 
             fileLength = responseBody.contentLength();
+            callback.onStart(resId, fileLength, "ETag");
 
             byte[] buffer = new byte[1024 * 2];
             int length;
@@ -108,5 +109,21 @@ public class DownloadThread implements Consumer<ResponseBody> {
         } else {
             return contentLength == localFile.length();
         }
+    }
+
+    @Override
+    public void onSubscribe(Disposable d) {
+        callback.onSubscribe(resId, d);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        Timber.e("rx onError");
+        callback.onError(resId, tempFilePath);
+    }
+
+    @Override
+    public void onComplete() {
+
     }
 }
