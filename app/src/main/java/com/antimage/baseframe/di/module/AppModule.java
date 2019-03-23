@@ -5,12 +5,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.antimage.baseframe.annotation.MainScheduler;
-import com.antimage.baseframe.database.MOpenHelper;
-import com.antimage.baseframe.model.DaoMaster;
-import com.antimage.baseframe.model.DaoSession;
-
-import org.greenrobot.greendao.database.Database;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -58,14 +52,6 @@ public class AppModule {
     @MainScheduler
     Scheduler provideMainScheduler() {
         return AndroidSchedulers.mainThread();
-    }
-
-    @Singleton
-    @Provides
-    DaoSession provideDaoSession() {
-        MOpenHelper helper = new MOpenHelper(application, "base-frame");
-        Database db = helper.getWritableDb();
-        return new DaoMaster(db).newSession();
     }
 
 }

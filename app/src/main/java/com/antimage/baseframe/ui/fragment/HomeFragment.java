@@ -14,13 +14,15 @@ import android.support.v7.widget.Toolbar;
 
 import com.antimage.baseframe.R;
 import com.antimage.baseframe.databinding.FragmentHomeBinding;
+import com.antimage.baseframe.presenter.HomePresenter;
 import com.antimage.baseframe.ui.activity.SettingActivity;
+import com.antimage.baseframe.ui.base.LifeCycleFragment;
 
 /**
  * Created by xuyuming on 2018/9/28.
  */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends LifeCycleFragment<HomePresenter> {
 
     private FragmentHomeBinding mBinding;
 
@@ -28,7 +30,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
-
         mBinding.toolBarId.setTitle("标题");
 
 //        mBinding.tabLayout.addTab(mBinding.tabLayout.newTab().setText("tab 1"));
@@ -46,7 +47,6 @@ public class HomeFragment extends Fragment {
         toggle.syncState();
 
         for (int i = 0; i < mBinding.toolBarId.getChildCount(); i++) {
-
             Toolbar.LayoutParams lp = (Toolbar.LayoutParams) mBinding.toolBarId.getChildAt(i).getLayoutParams();
             lp.gravity = Gravity.CENTER_VERTICAL;
             mBinding.toolBarId.getChildAt(i).setLayoutParams(lp);

@@ -1,4 +1,4 @@
-package com.antimage.baseframe.presenter;
+package com.antimage.baseframe.presenter.base;
 
 import com.trello.rxlifecycle2.android.ActivityEvent;
 

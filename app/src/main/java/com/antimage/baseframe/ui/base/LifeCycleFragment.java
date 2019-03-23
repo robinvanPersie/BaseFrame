@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.antimage.baseframe.presenter.FragmentPresenter;
-import com.antimage.baseframe.ui.interf.IWithPresenter;
+import com.antimage.baseframe.presenter.base.FragmentPresenter;
+import com.antimage.baseframe.ui.view.base.IWithPresenter;
 
 import javax.inject.Inject;
 

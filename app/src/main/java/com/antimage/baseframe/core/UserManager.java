@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.antimage.baseframe.App;
 import com.antimage.baseframe.exception.ApiException;
-import com.antimage.baseframe.model.User;
 import com.antimage.baseframe.net.api.ApiService;
 import com.antimage.baseframe.utils.android.SPUtils;
 
@@ -18,18 +17,11 @@ import io.reactivex.Observable;
 
 public class UserManager {
 
-    @Inject
     ApiService apiService;
 
-    public UserManager() {}
-
-    private User mUser;
-
-    public User getUser() {
-        if (mUser == null) {
-            mUser = App.getInstance().getDaoSession().getUserDao().load(0l);
-        }
-        return mUser;
+    @Inject
+    public UserManager() {
+        apiService = InjectConfig.get().apiService();
     }
 
     public boolean isLogin() {

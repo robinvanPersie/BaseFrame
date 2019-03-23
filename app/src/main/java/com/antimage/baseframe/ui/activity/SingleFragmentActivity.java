@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import com.antimage.baseframe.R;
 import com.antimage.baseframe.databinding.ActivityFragmentBinding;
 import com.antimage.baseframe.ui.base.BaseActivity;
-import com.antimage.baseframe.ui.interf.IToolbar;
+import com.antimage.baseframe.ui.view.base.IToolbar;
 import com.antimage.baseframe.utils.android.FragmentUtils;
 
 /**

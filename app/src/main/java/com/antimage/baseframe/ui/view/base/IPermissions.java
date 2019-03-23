@@ -1,4 +1,4 @@
-package com.antimage.baseframe.ui.interf;
+package com.antimage.baseframe.ui.view.base;
 
 import android.support.annotation.StringRes;
 

@@ -1,11 +1,11 @@
-package com.antimage.baseframe.presenter;
+package com.antimage.baseframe.presenter.base;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
 
 import com.antimage.baseframe.core.LoadingTransform;
-import com.antimage.baseframe.ui.interf.IComposeLoading;
-import com.antimage.baseframe.ui.interf.ILoading;
+import com.antimage.baseframe.ui.view.base.IComposeLoading;
+import com.antimage.baseframe.ui.view.base.ILoading;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;

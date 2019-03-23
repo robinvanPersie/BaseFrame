@@ -1,4 +1,4 @@
-package com.antimage.baseframe.ui.interf;
+package com.antimage.baseframe.ui.view.base;
 
 /**
  * Created by xuyuming on 2018/10/16.

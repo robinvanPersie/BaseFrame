@@ -15,16 +15,21 @@ import android.view.ViewGroup;
 
 import com.antimage.baseframe.R;
 import com.antimage.baseframe.databinding.FragmentLrecyclerBinding;
+import com.antimage.baseframe.presenter.LRecyclerPresenter;
+import com.antimage.baseframe.ui.base.LifeCycleFragment;
 import com.antimage.baseframe.ui.fragment.sub.GridSubFragment;
 import com.antimage.baseframe.ui.fragment.sub.LinearSubFragment;
 import com.antimage.baseframe.ui.fragment.sub.SnapSubFragment;
 import com.antimage.baseframe.ui.fragment.sub.StaggerSubFragment;
+import com.antimage.baseframe.ui.view.LRecyclerView;
+
+import timber.log.Timber;
 
 /**
  * Created by xuyuming on 2018/10/10.
  */
 
-public class LRecyclerFragment extends Fragment {
+public class LRecyclerFragment extends LifeCycleFragment<LRecyclerPresenter> implements LRecyclerView {
 
     FragmentLrecyclerBinding binding;
 
@@ -35,9 +40,9 @@ public class LRecyclerFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lrecycler, container, false);
 
 
-        binding.tabLayout.addTab(binding.tabLayout.newTab());
-        binding.tabLayout.addTab(binding.tabLayout.newTab());
-        binding.tabLayout.addTab(binding.tabLayout.newTab());
+//        binding.tabLayout.addTab(binding.tabLayout.newTab());
+//        binding.tabLayout.addTab(binding.tabLayout.newTab());
+//        binding.tabLayout.addTab(binding.tabLayout.newTab());
 
 //        binding.viewPager.setAdapter(new PagerAdapter(getActivity().getSupportFragmentManager()));
         binding.viewPager.setAdapter(new PagerAdapter(getChildFragmentManager()));
@@ -75,6 +80,7 @@ public class LRecyclerFragment extends Fragment {
             }
 
         });
+        Timber.d("tab count: " + binding.tabLayout.getTabCount());
         return binding.getRoot();
     }
 

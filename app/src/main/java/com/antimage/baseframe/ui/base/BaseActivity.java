@@ -6,12 +6,15 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.antimage.baseframe.App;
+import com.antimage.baseframe.core.AppConfig;
+import com.antimage.baseframe.core.AppManager;
+import com.antimage.baseframe.core.InjectConfig;
+import com.antimage.baseframe.core.UserManager;
 import com.antimage.baseframe.di.component.AppComponent;
 import com.antimage.baseframe.di.module.ActivityModule;
 import com.antimage.baseframe.ui.fragment.dialog.LoadingDialogFragment;
-import com.antimage.baseframe.ui.interf.ILoading;
-import com.antimage.baseframe.ui.interf.IPermissions;
-import com.antimage.baseframe.ui.interf.IToast;
+import com.antimage.baseframe.ui.view.base.IBaseView;
+import com.antimage.baseframe.ui.view.base.ILoading;
 import com.antimage.baseframe.utils.android.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -23,14 +26,20 @@ import timber.log.Timber;
  * Created by xuyuming on 2018/10/15.
  */
 
-public class BaseActivity extends RxAppCompatActivity implements ILoading, IToast, IPermissions {
+public class BaseActivity extends RxAppCompatActivity implements IBaseView, ILoading {
 
     private static final String LOADING_TAG = "loadingTag";
     private RxPermissions rxPermissions;
+    protected UserManager mUserManager;
+    protected AppConfig mAppConfig;
+    protected AppManager mAppManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mUserManager = InjectConfig.get().userManager();
+        mAppConfig = InjectConfig.get().appConfig();
+        mAppManager = InjectConfig.get().appManager();
     }
 
     public AppComponent getAppComponent() {

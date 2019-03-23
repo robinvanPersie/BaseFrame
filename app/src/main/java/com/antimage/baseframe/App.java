@@ -4,12 +4,16 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.antimage.baseframe.core.AppConfig;
+import com.antimage.baseframe.core.AppManager;
+import com.antimage.baseframe.core.InjectConfig;
+import com.antimage.baseframe.core.UserManager;
 import com.antimage.baseframe.di.component.AppComponent;
 import com.antimage.baseframe.di.component.DaggerAppComponent;
 import com.antimage.baseframe.di.module.AppModule;
 import com.antimage.baseframe.event.ForceLogoutStatusEvent;
 import com.antimage.baseframe.event.RxBus;
-import com.antimage.baseframe.model.DaoSession;
+import com.antimage.baseframe.net.api.ApiService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,9 +35,15 @@ public class App extends Application {
     }
 
     @Inject
-    Timber.Tree mTree;
+    UserManager mUserManager;
     @Inject
-    DaoSession daoSession;
+    AppConfig mAppConfig;
+    @Inject
+    AppManager mAppManager;
+    @Inject
+    ApiService mApiService;
+    @Inject
+    Timber.Tree mTree;
 
     private AppComponent appComponent;
 
@@ -45,6 +55,14 @@ public class App extends Application {
         instance = this;
         initializeInjector();
         Timber.plant(mTree);
+        initInjectConfig();
+    }
+
+    private void initInjectConfig() {
+        InjectConfig.get().setUserManage(mUserManager)
+                .setAppManager(mAppManager)
+                .setAppConfig(mAppConfig)
+                .setApiService(mApiService);
     }
 
     /**
@@ -63,10 +81,6 @@ public class App extends Application {
                     }
                     //todo
                 }, Timber::wtf);
-    }
-
-    public DaoSession getDaoSession() {
-        return daoSession;
     }
 
     public AppComponent getAppComponent() {

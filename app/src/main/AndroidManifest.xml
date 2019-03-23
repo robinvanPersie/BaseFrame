@@ -21,10 +21,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <meta-data
-            android:name="DEBUG_MODE"
-            android:value="${DEBUG_MODE}" />
-
         <activity
             android:name="com.antimage.baseframe.ui.activity.MaterialActivity"
             android:theme="@style/NoActionBar">

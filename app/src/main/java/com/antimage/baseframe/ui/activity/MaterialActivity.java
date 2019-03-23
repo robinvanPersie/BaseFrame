@@ -13,20 +13,24 @@ import android.view.MenuItem;
 
 import com.antimage.baseframe.R;
 import com.antimage.baseframe.databinding.ActivityMaterialBinding;
+import com.antimage.baseframe.presenter.MaterialPresenter;
 import com.antimage.baseframe.ui.base.BaseActivity;
-import com.antimage.baseframe.ui.fragment.DaoFragment;
+import com.antimage.baseframe.ui.base.LifeCycleActivity;
 import com.antimage.baseframe.ui.fragment.HomeFragment;
 import com.antimage.baseframe.ui.fragment.LRecyclerFragment;
 import com.antimage.baseframe.ui.fragment.RecyclerFragment;
 import com.antimage.baseframe.ui.fragment.ViewAnimFragment;
+import com.antimage.baseframe.ui.view.MaterialView;
 import com.antimage.baseframe.utils.android.BottomNavigationHelper;
 import com.antimage.baseframe.utils.android.FragmentUtils;
+
+import timber.log.Timber;
 
 /**
  * Created by xuyuming on 2018/9/28.
  */
 
-public class MaterialActivity extends BaseActivity {
+public class MaterialActivity extends LifeCycleActivity<MaterialPresenter> implements MaterialView {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,15 +38,6 @@ public class MaterialActivity extends BaseActivity {
         ActivityMaterialBinding mBinding = DataBindingUtil.setContentView(this, R.layout.activity_material);
 
         BottomNavigationHelper.disableShiftMode(mBinding.bottomNav);
-
-        MenuItem menuItem = mBinding.bottomNav.getMenu().findItem(R.id.home_item);
-        Drawable icon = menuItem.getIcon();
-        if (icon != null) {
-            Drawable.ConstantState state = icon.getConstantState();
-            icon = DrawableCompat.wrap(state == null ? icon : state.newDrawable()).mutate();
-            DrawableCompat.setTintMode(icon, PorterDuff.Mode.DST);
-        }
-        menuItem.setIcon(icon);
 
         FragmentUtils.replace(getSupportFragmentManager(), R.id.container_id, new HomeFragment());
 
@@ -62,7 +57,7 @@ public class MaterialActivity extends BaseActivity {
                     FragmentUtils.replace(getSupportFragmentManager(), R.id.container_id, new LRecyclerFragment());
                     return true;
                 case R.id.dao_item:
-                    FragmentUtils.replace(getSupportFragmentManager(), R.id.container_id, new DaoFragment());
+//                    FragmentUtils.replace(getSupportFragmentManager(), R.id.container_id, new DaoFragment());
                     return true;
             }
             return false;

@@ -11,10 +11,9 @@ import android.view.ViewGroup;
 import com.antimage.baseframe.App;
 import com.antimage.baseframe.di.component.AppComponent;
 import com.antimage.baseframe.di.module.FragmentModule;
-import com.antimage.baseframe.ui.interf.ILoading;
-import com.antimage.baseframe.ui.interf.IPermissions;
-import com.antimage.baseframe.ui.interf.IToast;
-import com.antimage.baseframe.ui.interf.IToolbar;
+import com.antimage.baseframe.ui.view.base.IBaseView;
+import com.antimage.baseframe.ui.view.base.ILoading;
+import com.antimage.baseframe.ui.view.base.IToolbar;
 import com.antimage.baseframe.utils.android.ToastUtils;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
@@ -24,7 +23,7 @@ import io.reactivex.Observable;
  * Created by xuyuming on 2018/10/16.
  */
 
-public abstract class BaseFragment extends RxFragment implements ILoading, IToast, IPermissions {
+public abstract class BaseFragment extends RxFragment implements IBaseView, ILoading {
 
     /**
      * 没有toolbar时的默认实现
@@ -34,7 +33,7 @@ public abstract class BaseFragment extends RxFragment implements ILoading, IToas
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initializeInjector();
+//        initializeInjector();
     }
 
     @Nullable
@@ -43,7 +42,7 @@ public abstract class BaseFragment extends RxFragment implements ILoading, IToas
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    protected abstract void initializeInjector();
+//    protected abstract void initializeInjector();
 
     protected FragmentModule getFragmentModule() {
         return new FragmentModule(this);

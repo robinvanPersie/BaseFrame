@@ -12,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -72,13 +71,6 @@ public class ViewAnimFragment extends Fragment {
         });
 
         mBinding.btn5.setOnClickListener(v -> {
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_award_banner);
-            Palette palette = new Palette.Builder(bm).generate();
-            mBinding.iv1.setBackgroundColor(palette.getLightVibrantSwatch().getRgb()); // 有活力 亮色
-//            mBinding.iv2.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb()); // 有活力 暗色
-            mBinding.iv3.setBackgroundColor(palette.getLightMutedSwatch().getRgb()); // 柔和 亮色
-//            mBinding.iv4.setBackgroundColor(palette.getDarkMutedSwatch().getRgb());  // 柔和 暗色
-
         });
         return mBinding.getRoot();
     }

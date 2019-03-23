@@ -6,16 +6,13 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 
-import com.antimage.baseframe.App;
 import com.antimage.baseframe.R;
 import com.antimage.baseframe.core.AppConfig;
 import com.antimage.baseframe.core.AppManager;
-import com.antimage.baseframe.di.component.DaggerDebugSettingComponent;
+import com.antimage.baseframe.core.InjectConfig;
 import com.antimage.baseframe.utils.android.DeviceUtils;
 import com.antimage.baseframe.utils.android.SPUtils;
 import com.antimage.baseframe.utils.android.ToastUtils;
-
-import javax.inject.Inject;
 
 /**
  * Created by xuyuming on 2018/11/15.
@@ -23,17 +20,14 @@ import javax.inject.Inject;
 
 public class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
-    @Inject
     AppConfig appConfig;
-    @Inject
     AppManager appManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DaggerDebugSettingComponent.builder()
-                .appComponent(App.getInstance().getAppComponent())
-                .build().inject(this);
+        appConfig = InjectConfig.get().appConfig();
+        appManager = InjectConfig.get().appManager();
 
         addPreferencesFromResource(R.xml.setting_xml);
 

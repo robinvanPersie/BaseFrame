@@ -3,19 +3,14 @@ package com.antimage.baseframe.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
 import com.antimage.baseframe.R;
 import com.antimage.baseframe.di.component.AppComponent;
 import com.antimage.baseframe.di.module.FragmentModule;
-import com.antimage.baseframe.ui.interf.ILoading;
-import com.antimage.baseframe.ui.interf.IToast;
+import com.antimage.baseframe.ui.view.base.ILoading;
+import com.antimage.baseframe.ui.view.base.IToast;
 import com.antimage.baseframe.utils.android.ToastUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatDialogFragment;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by xuyuming on 2018/10/24.

@@ -2,7 +2,7 @@ package com.antimage.baseframe.core;
 
 import android.support.annotation.StringRes;
 
-import com.antimage.baseframe.ui.interf.ILoading;
+import com.antimage.baseframe.ui.view.base.ILoading;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;

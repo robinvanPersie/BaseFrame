@@ -6,7 +6,6 @@ import com.antimage.baseframe.App;
 import com.antimage.baseframe.annotation.MainScheduler;
 import com.antimage.baseframe.core.AppConfig;
 import com.antimage.baseframe.di.module.AppModule;
-import com.antimage.baseframe.model.DaoSession;
 
 import javax.inject.Singleton;
 
@@ -37,5 +36,4 @@ public interface AppComponent {
     @MainScheduler
     Scheduler mainScheduler();
 
-    DaoSession daoSession();
 }
