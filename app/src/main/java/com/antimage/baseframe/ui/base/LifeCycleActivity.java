@@ -2,6 +2,7 @@ package com.antimage.baseframe.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 
 import com.antimage.baseframe.presenter.base.ActivityPresenter;
 import com.antimage.baseframe.presenter.base.BasePresenter;
@@ -13,7 +14,7 @@ import javax.inject.Inject;
  * Created by xuyuming on 2019/3/23.
  */
 
-public class LifeCycleActivity<P extends ActivityPresenter> extends BaseActivity implements IWithPresenter {
+public abstract class LifeCycleActivity<P extends ActivityPresenter> extends BaseActivity implements IWithPresenter {
 
     @Inject
     P mPresenter;
@@ -32,6 +33,12 @@ public class LifeCycleActivity<P extends ActivityPresenter> extends BaseActivity
         if (mPresenter != null) {
             mPresenter.onAttachView(this);
         }
+        Toolbar toolbar = buildToolbar();
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(showBackBtn());
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
     }
 
     @Override
@@ -43,6 +50,11 @@ public class LifeCycleActivity<P extends ActivityPresenter> extends BaseActivity
         }
     }
 
+    protected abstract Toolbar buildToolbar();
+
+    protected boolean showBackBtn() {
+        return true;
+    }
 
     @Override
     public BasePresenter getPresenter() {

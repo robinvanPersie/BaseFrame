@@ -21,17 +21,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name="com.antimage.baseframe.ui.activity.MaterialActivity"
-            android:theme="@style/NoActionBar">
+        <activity android:name=".ui.activity.LauncherActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.antimage.baseframe.ui.activity.AnimOpenActivity" />
+        <activity android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".ui.activity.SettingActivity" />
 

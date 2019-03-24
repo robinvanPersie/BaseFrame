@@ -37,9 +37,24 @@ public class BaseActivity extends RxAppCompatActivity implements IBaseView, ILoa
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserManager = InjectConfig.get().userManager();
-        mAppConfig = InjectConfig.get().appConfig();
-        mAppManager = InjectConfig.get().appManager();
+        if (needUserManager())
+            mUserManager = InjectConfig.get().userManager();
+        if (needAppConfig())
+            mAppConfig = InjectConfig.get().appConfig();
+        if (needAppManager())
+            mAppManager = InjectConfig.get().appManager();
+    }
+
+    protected boolean needUserManager() {
+        return true;
+    }
+
+    protected boolean needAppConfig() {
+        return true;
+    }
+
+    protected boolean needAppManager() {
+        return true;
     }
 
     public AppComponent getAppComponent() {
