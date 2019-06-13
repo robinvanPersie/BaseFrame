@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="base_AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/base_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/base_colorPrimaryDark</item>
+        <item name="colorAccent">@color/base_colorAccent</item>
+        <item name="android:textColorPrimary">@android:color/holo_red_light</item>
+
+    </style>
+
+    <style name="base_Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextColor">@android:color/holo_red_light</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">#eeeeee</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:textSize">20sp</item>
+        <!--<item name="collapseIcon">?attr/homeAsUpIndicator</item>-->
+        <!--<item name="android:background">@color/brightWhite</item>-->
+    </style>
+
+    <!-- base -->
+    <style name="base_Progress" parent="Base.Widget.AppCompat.ProgressBar">
+    </style>
+
+    <style name="base_Progress.loading">
+        <item name="android:maxHeight">24dip</item>
+        <item name="android:minWidth">24dip</item>
+        <item name="android:maxWidth">24dip</item>
+        <item name="android:minHeight">24dip</item>
+    </style>
+
+    <style name="base_TextNormalWhite">
+        <item name="android:textSize">@dimen/base_text_size_14_sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="base_AppTheme.Loading">
+        <item name="colorAccent">?attr/color</item>
+    </style>
+
+    <style name="base_AppTheme.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">80%</item>
+        <item name="android:windowMinWidthMinor">80%</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+</resources>

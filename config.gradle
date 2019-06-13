@@ -1,0 +1,14 @@
+ext{
+    isModule=false
+    android=[
+            compileSdkVersion:27,
+            minSdkVersion:15,
+            targetSdkVersion:27,
+            versionCode: 1,
+            versionName: "1.0"
+    ]
+    dependencies=[
+            supportLibraryVersion:'27.1.1',
+            constraintLayout:'1.1.1'
+    ]
+}

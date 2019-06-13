@@ -1,17 +1,16 @@
 apply plugin: 'com.android.application'
 
+def config = rootProject.ext
 android {
-    compileSdkVersion 27
+    compileSdkVersion config.android.compileSdkVersion
     defaultConfig {
         applicationId "com.antimage.baseframe"
-        minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion config.android.minSdkVersion
+        targetSdkVersion config.android.targetSdkVersion
+        versionCode config.android.versionCode
+        versionName config.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
-        renderscriptTargetApi 20
-        renderscriptSupportModeEnabled true
+
     }
     buildTypes {
         debug {
@@ -22,10 +21,10 @@ android {
             versionNameSuffix '-dev'
         }
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue("string", "app_name", "BaseFrame")
-            shrinkResources true
+            shrinkResources false
         }
     }
     dataBinding.enabled = true
@@ -41,56 +40,16 @@ configurations.all {
 }
 
 dependencies {
-    def supportVersion = '27.1.0'
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //noinspection GradleCompatible
-    implementation "com.android.support:appcompat-v7:${supportVersion}"
-    implementation "com.android.support:design:${supportVersion}"
-    implementation "com.android.support:cardview-v7:${supportVersion}"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.android.support:multidex:1.0.1'
-    //rx core https://github.com/ReactiveX/RxJava   https://github.com/ReactiveX/RxAndroid  apache2.0
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.2@aar'
-    //rx life cycle  https://github.com/trello/RxLifecycle/tree/2.x  apache2.0
-    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.0.1'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
-    implementation 'com.google.code.gson:gson:2.8.0'
-    //retrofit  https://github.com/square/retrofit apache2.0
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    //okhttp https://github.com/square/okhttp
-    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
-    //okhttp log
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.2'
-    //glide
-    implementation('com.github.bumptech.glide:glide:4.8.0') {
-        exclude group: 'com.android.support'
-        exclude module: 'design'
-    }
-    annotationProcessor'com.github.bumptech.glide:compiler:4.8.0'
-    // GlideModule merged automatically
-//    implementation 'com.github.bumptech.glide:okhttp3-integration:1.5.0@aar'
-    implementation ('com.github.bumptech.glide:okhttp3-integration:4.8.0') {
-        exclude group: 'com.android.support'
-        exclude module: 'design'
-    }
 
-    implementation ('jp.wasabeef:glide-transformations:3.3.0') {
-        exclude group: 'com.android.support'
-        exclude module: 'renderscript-v8'
+    if (config.isModule) {
+        implementation project(":independent_module")
+    } else {
+        implementation project(":base_module")
     }
-    // custom recyclerView
-    implementation 'com.github.jdsjlzx:LRecyclerView:1.5.0'
-    //dagger 2  https://github.com/google/dagger apache2.0
-    implementation 'com.google.dagger:dagger:2.9'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
-    //Timber
-    implementation 'com.jakewharton.timber:timber:4.7.1'
 }

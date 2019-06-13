@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BaseFrame.iml" filepath="$PROJECT_DIR$/BaseFrame.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base_module/base_module.iml" filepath="$PROJECT_DIR$/base_module/base_module.iml" />
+      <module fileurl="file://$PROJECT_DIR$/independent_module/independent_module.iml" filepath="$PROJECT_DIR$/independent_module/independent_module.iml" />
+      <module fileurl="file://$PROJECT_DIR$/independent_module/independet_module.iml" filepath="$PROJECT_DIR$/independent_module/independet_module.iml" />
     </modules>
   </component>
 </project>

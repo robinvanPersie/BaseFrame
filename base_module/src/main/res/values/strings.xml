@@ -1,0 +1,5 @@
+<resources>
+    <string name="base_app_name">BaseModule</string>
+
+    <string name="base_text_loading">请稍后...</string>
+</resources>

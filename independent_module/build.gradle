@@ -1,0 +1,71 @@
+def isModule = rootProject.ext.isModule
+if (isModule) {
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'com.android.application'
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        if (!isModule) {
+            applicationId "com.antimage.independentmodule"
+        }
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resourcePrefix "idpd_"
+
+//        packagingOptions {
+//            exclude 'lib/armeabi-v7/libRSSupport.so'
+//            exclude 'lib/armeabi-v7a/libRSSupport.so'
+//            exclude 'lib/arm64-v8a/libRSSupport.so'
+//            exclude 'lib/x86/libRSSupport.so'
+//
+//            exclude 'lib/armeabi-v7/librsjni.so'
+//            exclude 'lib/armeabi-v7a/librsjni.so'
+//            exclude 'lib/arm64-v8a/librsjni.so'
+//            exclude 'lib/x86/librsjni.so'
+//        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            if (isModule) {
+                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                java {
+                    exclude 'debug/**'
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
+    annotationProcessor'com.github.bumptech.glide:compiler:4.8.0'
+    api project(':base_module')
+}
