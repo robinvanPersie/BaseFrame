@@ -16,6 +16,7 @@ import java.text.ParseException;
 
 import io.reactivex.functions.Consumer;
 import retrofit2.HttpException;
+import timber.log.Timber;
 
 /**
  * Created by xuyuming on 2019/6/13.
@@ -23,21 +24,17 @@ import retrofit2.HttpException;
 
 public class ApiExceptionProcess implements ExceptionProcess {
 
+    private static final Consumer<ApiException> DEFAULT_CONSUMER = e -> ToastUtils.toastShort(e.getMessage());
+
     private static final int FORCE_LOGOUT = 10010; // 强制退出，可用于token过期或另一台设备登录
     private Consumer<ApiException> mConsumer;
 
     public ApiExceptionProcess() {
-        this(e -> ToastUtils.toastShort(e.getMessage()));
+        this(DEFAULT_CONSUMER);
     }
 
     public ApiExceptionProcess(Consumer<ApiException> consumer) {
         mConsumer = consumer;
-    }
-
-    public ApiExceptionProcess setConsumer(Consumer<ApiException> consumer) {
-        if (mConsumer == consumer) return this;
-        mConsumer = consumer;
-        return this;
     }
 
     @Override
@@ -75,6 +72,7 @@ public class ApiExceptionProcess implements ExceptionProcess {
                 ToastUtils.toastShort("连接超时");
             }
         } else {
+            Timber.e("else exception");
             ToastUtils.toastShort("网络异常，请稍后再试");
             t.printStackTrace();
         }

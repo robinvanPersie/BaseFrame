@@ -11,15 +11,14 @@ import io.reactivex.functions.Consumer;
 public class ApiExceptionHelper {
 
     static final ApiExceptionProcess PROCESS = new ApiExceptionProcess();
-    static final Consumer<ApiException> DEFAULT_CONSUMER = e -> ToastUtils.toastShort(e.getMessage());
 
     private ApiExceptionHelper() {}
 
     public static ApiExceptionProcess normal() {
-        return PROCESS.setConsumer(DEFAULT_CONSUMER);
+        return PROCESS;
     }
 
     public static ApiExceptionProcess normal(Consumer<ApiException> consumer) {
-        return PROCESS.setConsumer(consumer);
+        return new ApiExceptionProcess(consumer);
     }
 }

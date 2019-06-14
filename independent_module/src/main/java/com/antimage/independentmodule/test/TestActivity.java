@@ -1,22 +1,25 @@
 package com.antimage.independentmodule.test;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
 
 import com.antimage.basemodule.ui.activity.LifeCycleActivity;
 import com.antimage.independentmodule.R;
+import com.antimage.independentmodule.databinding.IdpdActivityTestBinding;
 import com.antimage.independentmodule.di.component.DaggerEasyActivityComponent;
 
 public class TestActivity extends LifeCycleActivity<TestPresenter> implements TestView{
 
-    private TextView textView;
+    private IdpdActivityTestBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.idpd_activity_login);
-        textView = findViewById(R.id.tv);
+        binding = DataBindingUtil.setContentView(this, R.layout.idpd_activity_test);
+        binding.tv.setOnClickListener(v -> {
+            getPresenter().test();
+        });
     }
 
     @Override
@@ -29,11 +32,11 @@ public class TestActivity extends LifeCycleActivity<TestPresenter> implements Te
 
     @Override
     protected Toolbar buildToolbar() {
-        return null;
+        return binding.toolbarId.toolbar;
     }
 
     @Override
     public void success(String str) {
-        textView.setText(str);
+        binding.tv.setText(str);
     }
 }

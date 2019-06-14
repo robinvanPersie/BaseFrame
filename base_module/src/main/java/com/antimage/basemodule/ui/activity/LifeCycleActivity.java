@@ -15,7 +15,7 @@ import javax.inject.Inject;
  * Created by xuyuming on 2019/3/23.
  */
 
-public abstract class LifeCycleActivity<P extends ActivityPresenter> extends BaseActivity implements IWithPresenter {
+public abstract class LifeCycleActivity<P extends ActivityPresenter> extends BaseActivity implements IWithPresenter<P> {
 
     @Inject
     P mPresenter;
@@ -61,8 +61,7 @@ public abstract class LifeCycleActivity<P extends ActivityPresenter> extends Bas
     }
 
     @Override
-    public BasePresenter getPresenter() {
+    public P getPresenter() {
         return mPresenter;
     }
-
 }

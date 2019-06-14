@@ -24,6 +24,10 @@ public class TestPresenter extends ActivityPresenter<TestView> {
     @Override
     public void onAttachView(TestView testView) {
         super.onAttachView(testView);
+    }
+
+    // 403 api
+    public void test() {
         mApiService.getWeather("上海")
                 .compose(bindLoading())
                 .observeOn(AndroidSchedulers.mainThread())

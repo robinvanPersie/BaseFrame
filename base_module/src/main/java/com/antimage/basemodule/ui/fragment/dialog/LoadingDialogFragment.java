@@ -64,7 +64,6 @@ public class LoadingDialogFragment extends DialogFragment {
             dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         }
         dialog.setCanceledOnTouchOutside(false);
-        Timber.w("onCreateDialog()");
         return dialog;
     }
 
@@ -85,7 +84,6 @@ public class LoadingDialogFragment extends DialogFragment {
         } else {
             msgView.setText(message);
         }
-        Timber.w("onCreateView()");
         return view;
     }
 
