@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="idpd_AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/idpd_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/idpd_colorPrimaryDark</item>
+        <item name="colorAccent">@color/idpd_colorAccent</item>
         <item name="android:textColorPrimary">@android:color/holo_red_light</item>
 
+    </style>
+
+    <style name="idpd_Launcher" parent="idpd_AppTheme">
+        <item name="android:windowBackground">@drawable/launcher_bg</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 </resources>

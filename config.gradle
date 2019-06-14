@@ -1,5 +1,5 @@
 ext{
-    isModule=false
+    isModule=true
     android=[
             compileSdkVersion:27,
             minSdkVersion:15,

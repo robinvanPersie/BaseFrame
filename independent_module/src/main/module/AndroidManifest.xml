@@ -6,16 +6,21 @@
         android:name="com.antimage.basemodule.BaseApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/idpd_app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/idpd_AppTheme">
 
-        <activity android:name="com.antimage.independentmodule.test.TestActivity">
+        <activity android:name=".test.LauncherActivity"
+            android:theme="@style/idpd_Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="com.antimage.independentmodule.test.TestActivity"
+            android:launchMode="singleTask">
+
         </activity>
     </application>
 
