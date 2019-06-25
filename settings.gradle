@@ -1,1 +1,1 @@
-include ':app', ':base_module', ':independent_module'
+include ':app', ':base_module', ':independent_module', ':router_module'

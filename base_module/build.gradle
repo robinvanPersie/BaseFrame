@@ -16,6 +16,12 @@ android {
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
         resourcePrefix "base_"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     buildTypes {
@@ -32,6 +38,10 @@ android {
 
     dataBinding.enabled = true
 
+}
+
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:$config.dependencies.supportLibraryVersion"
 }
 
 dependencies {
@@ -63,7 +73,7 @@ dependencies {
     api 'com.squareup.okhttp3:logging-interceptor:3.4.2'
     //dagger 2  https://github.com/google/dagger apache2.0
     api 'com.google.dagger:dagger:2.9'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
+    annotationProcessor "com.google.dagger:dagger-compiler:$config.dependencies.daggerCompilerVersion"
     //Timber
     api 'com.jakewharton.timber:timber:4.7.1'
     //glide
@@ -81,11 +91,13 @@ dependencies {
     }
 
     api 'jp.wasabeef:glide-transformations:2.0.1'
-//    api 'jp.wasabeef:glide-transformations:3.3.0'
-//    api ('jp.wasabeef:glide-transformations:3.3.0') {
-//        exclude group: 'com.android.support'
-//        exclude module: 'renderscript-v8'
-//    }
     // custom recyclerView
     api 'com.github.jdsjlzx:LRecyclerView:1.5.0'
+    // ARouter https://github.com/alibaba/ARouter
+    api 'com.alibaba:arouter-api:1.4.1'
+//    api ("com.alibaba:arouter-api:$config.dependencies.arouterCompilerVersion") {
+//        exclude group: 'com.android.support'
+//        exclude module: 'support-v4'
+//    }
+    annotationProcessor "com.alibaba:arouter-compiler:$config.dependencies.arouterCompilerVersion"
 }

@@ -14,11 +14,19 @@
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="i'm login activity"
+            android:text="i'm independentModule"
             android:textSize="30sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar_id" />
+
+        <Button
+            android:id="@+id/btn_go_rt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="go rt module by ARouter"
+            android:textAllCaps="false"
+            app:layout_constraintTop_toBottomOf="@id/tv"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

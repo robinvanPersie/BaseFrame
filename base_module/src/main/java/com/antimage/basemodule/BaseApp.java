@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.antimage.basemodule.core.InjectManager;
 import com.antimage.basemodule.di.component.AppComponent;
 import com.antimage.basemodule.di.component.DaggerAppComponent;
@@ -39,6 +40,9 @@ public class BaseApp extends Application {
         initializeInjector();
         if (mTree != null)
             Timber.plant(mTree);
+        ARouter.init(this);
+        ARouter.openLog();
+        ARouter.getInstance().openDebug();
     }
 
     public InjectManager injectManager() {

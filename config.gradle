@@ -9,6 +9,8 @@ ext{
     ]
     dependencies=[
             supportLibraryVersion:'27.1.1',
-            constraintLayout:'1.1.1'
+            constraintLayout:'1.1.1',
+            daggerCompilerVersion:'2.9',
+            arouterCompilerVersion:'1.2.2'
     ]
 }

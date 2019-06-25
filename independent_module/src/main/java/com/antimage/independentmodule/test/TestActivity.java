@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.antimage.basemodule.ui.activity.LifeCycleActivity;
 import com.antimage.independentmodule.R;
 import com.antimage.independentmodule.databinding.IdpdActivityTestBinding;
@@ -19,6 +20,11 @@ public class TestActivity extends LifeCycleActivity<TestPresenter> implements Te
         binding = DataBindingUtil.setContentView(this, R.layout.idpd_activity_test);
         binding.tv.setOnClickListener(v -> {
             getPresenter().test();
+        });
+        binding.btnGoRt.setOnClickListener(v -> {
+            ARouter.getInstance().build("/rt/routerTest")
+                    .withString("str", "independentModule")
+                    .navigation();
         });
     }
 

@@ -11,6 +11,11 @@ android {
         versionName config.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
     buildTypes {
         debug {
@@ -49,6 +54,7 @@ dependencies {
 
     if (config.isModule) {
         implementation project(":independent_module")
+        implementation project(":router_module")
     } else {
         implementation project(":base_module")
     }

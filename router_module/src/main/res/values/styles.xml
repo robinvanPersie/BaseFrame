@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="rt_AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/rt_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/rt_colorPrimaryDark</item>
+        <item name="colorAccent">@color/rt_colorAccent</item>
+        <item name="android:textColorPrimary">@android:color/holo_red_light</item>
+
+    </style>
+
+</resources>

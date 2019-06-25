@@ -7,36 +7,26 @@ if (isModule) {
 
 def config = rootProject.ext
 android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    compileSdkVersion config.android.compileSdkVersion
 
     defaultConfig {
         if (!isModule) {
-            applicationId "com.antimage.independentmodule"
+            applicationId "com.antimage.routermodule"
         }
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        minSdkVersion config.android.minSdkVersion
+        targetSdkVersion config.android.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        resourcePrefix "idpd_"
+        resourcePrefix "rt_"
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
+                arguments = [AROUTER_MODULE_NAME: project.getName(), AROUTER_GENERATE_DOC: "enable"]
             }
         }
-//        packagingOptions {
-//            exclude 'lib/armeabi-v7/libRSSupport.so'
-//            exclude 'lib/armeabi-v7a/libRSSupport.so'
-//            exclude 'lib/arm64-v8a/libRSSupport.so'
-//            exclude 'lib/x86/libRSSupport.so'
-//
-//            exclude 'lib/armeabi-v7/librsjni.so'
-//            exclude 'lib/armeabi-v7a/librsjni.so'
-//            exclude 'lib/arm64-v8a/librsjni.so'
-//            exclude 'lib/x86/librsjni.so'
-//        }
+
     }
 
     dataBinding.enabled = true
@@ -73,8 +63,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
     annotationProcessor "com.google.dagger:dagger-compiler:$config.dependencies.daggerCompilerVersion"
     annotationProcessor "com.alibaba:arouter-compiler:$config.dependencies.arouterCompilerVersion"
-    annotationProcessor'com.github.bumptech.glide:compiler:4.8.0'
     api project(':base_module')
 }
