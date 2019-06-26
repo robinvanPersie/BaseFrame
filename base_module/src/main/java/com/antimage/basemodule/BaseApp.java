@@ -40,9 +40,11 @@ public class BaseApp extends Application {
         initializeInjector();
         if (mTree != null)
             Timber.plant(mTree);
+        if (BuildConfig.DEBUG) {
+            ARouter.openLog();
+            ARouter.openDebug();
+        }
         ARouter.init(this);
-        ARouter.openLog();
-        ARouter.getInstance().openDebug();
     }
 
     public InjectManager injectManager() {

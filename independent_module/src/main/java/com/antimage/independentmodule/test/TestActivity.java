@@ -26,6 +26,10 @@ public class TestActivity extends LifeCycleActivity<TestPresenter> implements Te
                     .withString("str", "independentModule")
                     .navigation();
         });
+        binding.btnGoApp.setOnClickListener(v -> {
+            ARouter.getInstance().build("/app/mainTest")
+                    .navigation();
+        });
     }
 
     @Override

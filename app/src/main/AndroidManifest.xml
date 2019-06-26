@@ -13,6 +13,8 @@
         android:theme="@style/AppTheme"
         tools:replace="android:name">
 
+        <activity android:name=".MainActivity"/>
+
     </application>
 
 </manifest>
